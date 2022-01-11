@@ -1,0 +1,26 @@
+const express = require('express')
+const { cadastroUsuario } = require('../controllers/cadastro-usuario')
+const { loginUsuario } = require('../controllers/login')
+const { dadosUsuario } = require('../controllers/detalha-usuario')
+const { verificaLogin } = require('../middleware/verifica-login')
+const { atualizaUsuario } = require('../controllers/edita-usuario')
+const { produtosUsuario } = require('../controllers/lista-produtos')
+const { infosProdutoUsuario } = require('../controllers/detalha-produto')
+const { cadastroProduto } = require('../controllers/cadastro-produto')
+const { atualizaProduto } = require('../controllers/edita-produto')
+const { deleteProdutoUsuario } = require('../controllers/remover-produtos')
+
+const rotas = express()
+
+rotas.post('/usuario', cadastroUsuario)
+rotas.post('/login', loginUsuario)
+rotas.use(verificaLogin)
+rotas.get('/usuario', dadosUsuario)
+rotas.put('/usuario', atualizaUsuario)
+rotas.get('/produtos', produtosUsuario)
+rotas.get('/produtos/:id', infosProdutoUsuario)
+rotas.post('/produtos', cadastroProduto)
+rotas.put('/produtos/:id', atualizaProduto)
+rotas.delete('/produtos/:id', deleteProdutoUsuario)
+
+module.exports = rotas
