@@ -1,8 +1,6 @@
-![](https://i.imgur.com/xG74tOh.png)
+# API PARA CADASTRO USUÁRIO E CRUD DE PRODUTOS - Back-end
 
-# Desafio Módulo 3 - Back-end
-
-Seu papel é construir uma RESTful API que permita:
+FUNCIONALIDADES DA API:
 
 -   Fazer Login
 -   Cadastrar Usuário
@@ -13,13 +11,8 @@ Seu papel é construir uma RESTful API que permita:
 -   Cadastrar produtos
 -   Editar produtos
 -   Remover produtos
--   **EXTRA:** Filtrar produtos por categoria
 
-**Importante: Lembre-se sempre que cada usuário só pode ver e manipular seus próprios dados e seus próprios produtos. Não atender a este pré-requisito é uma falha de segurança gravíssima!**
-
-**Importante 2: O diretório ".github" e seu conteúdo não podem ser alterados e muito menos excluídos**
-
-**Importante 3: Sempre que a validação de uma requisição falhar, responda com código de erro e mensagem adequada à situação, ok?**
+**Importante: Os dado de semha são criptografados seguindo o conceito de token e hash para segurança e autenticação.**
 
 **Exemplo:**
 
@@ -29,11 +22,18 @@ Seu papel é construir uma RESTful API que permita:
 {
     "mensagem": "Usuário não encontrado!"
 }
+
+ou
+
+// Quando é informado um token de usuário inválido:
+{
+    "mensagem": "Usuário não autorizado!"
+}
 ```
 
 ## **Banco de dados**
 
-Você precisa criar um Banco de Dados PostgreSQL chamado `market_cubos` contendo as seguintes tabelas e colunas:  
+Você deverá executar o arquivo **Schema** para criação de Banco de Dados PostgreSQL chamado `market` contendo as seguintes tabelas e colunas:  
 **ATENÇÃO! Os nomes das tabelas e das colunas a serem criados devem seguir exatamente os nomes listados abaixo.**
 
 -   usuarios
@@ -54,19 +54,11 @@ Você precisa criar um Banco de Dados PostgreSQL chamado `market_cubos` contendo
 
 **IMPORTANTE: Na raiz do seu repositório forkado deverá ser criado um arquivo SQL que deverá ser o script que cria as tabelas corretamente.**  
 
-## **Requisitos obrigatórios**
+## **Preparando a API**
 
--   A API a ser criada deverá acessar o banco de dados a ser criado "market_cubos" para persistir e manipular os dados de usuários e produtos utilizados pela aplicação.
+-   A API a ser criada deverá acessar o banco de dados a ser criado "market" para persistir e manipular os dados de usuários e produtos utilizados pela aplicação.
 -   O campo `id` das tabelas no banco de dados deve ser auto incremento, chave primária e não deve permitir edição uma vez criado.
--   Seu código deverá estar organizado, delimitando as responsabilidades de cada arquivo adequadamente. Ou seja, é esperado que ele tenha, no mínimo:
-    -   Um arquivo index.js
-    -   Um arquivo servidor.js
-    -   Um arquivo conexao.js
-    -   Um arquivo de rotas
-    -   Um pasta com controladores  
-    **ATENÇÃO!: os arquivos iniciais** já existentes neste repositório original (index.js, servidor.js e conexao.js) **não deverão ser renomeados e nem movidos dentro da estrutura de pastas do projeto**. O arquivo **conexao.js** deverá ser alterado **apenas** os valores das propriedades que definem **as credenciais de acesso** ao seu banco de dados. O arquivo **index.js não precisa e não deve ser alterado!**
--   Qualquer valor monetário deverá ser representado em centavos (Ex.: R$ 10,00 reais = 1000)
--   Evite códigos duplicados. Antes de copiar e colar, pense se não faz sentido esse pedaço de código estar centralizado numa função.
+ 
 
 ## **Status Codes**
 
@@ -257,16 +249,16 @@ Essa é a rota que será chamada quando o usuário quiser realizar alterações 
     Em caso de **falha na validação**, a resposta deverá possuir ***status code*** apropriado, e em seu corpo (body) deverá possuir um objeto com uma propriedade **mensagem** que deverá possuir como valor um texto explicando o motivo da falha.  
     **Dica:** neste endpoint podemos fazer uso do status code 401 (Unauthorized)
 
--   **REQUISITOS OBRIGATÓRIOS**
-    -   Validar os campos obrigatórios:
+-   **Validações da API**
+    -   Valida os campos obrigatórios:
         -   nome
         -   email
         -   senha
         -   nome_loja
-    -   Validar se o novo e-mail já existe no banco de dados para outro usuário
+    -   Valida se o novo e-mail já existe no banco de dados para outro usuário
         -   Caso já exista o novo e-mail fornecido para outro usuário no banco de dados, a alteração não deve ser permitida (o campo de email deve ser sempre único no banco de dados)
-    -   Criptografar a senha antes de salvar no banco de dados
-    -   Atualizar as informações do usuário no banco de dados
+    -   Criptografa a senha antes de salvar no banco de dados
+    -   Atualiza as informações do usuário no banco de dados
 
 #### **Exemplo de requisição**
 ```javascript
@@ -642,26 +634,3 @@ Na funcionalidade de listagem de produtos do usuário logado (**GET /produtos**)
 ```
 
 ---
-
-## **Aulas úteis:**  
-
-- [Modelagem de Dados](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/18/11/2021/aula/c458dfb4-a826-4570-9fab-ed82326cb3f9/e99dd1fd-bfec-4204-becd-fad43ea20c91)
-- [A relação um para muitos](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/18/11/2021/aula/c458dfb4-a826-4570-9fab-ed82326cb3f9/c26e54bf-af6e-44e9-abd3-150bde61f1bc)
-- [Criando tabelas com relacionamentos](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/18/11/2021/aula/c458dfb4-a826-4570-9fab-ed82326cb3f9/6a96759e-8ddd-428f-ab8d-5d7214181cf0)
-- [CRUD SQL](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/16/11/2021/aula/0cdd1159-77c4-426b-811c-aead4ec30a8d/81ee786d-751c-4a9b-9eb2-43954356117e)
-- [Programação Assíncrona](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/07/10/2021/aula/8a67797b-ddc6-4ff9-a3d4-9ea344dbe30f/5093d0d4-985a-4019-a6dc-bc98ad851f08)
-- [Funções async com await](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/07/10/2021/aula/8a67797b-ddc6-4ff9-a3d4-9ea344dbe30f/9d0f2598-bdf2-45ab-b519-fcc4bfa66aee)
-- [Conexão NodeJs com PostgreSQL](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/23/11/2021/aula/6424761e-b119-4369-82b3-c0a9203cf605/24fb6058-0a28-4b17-988b-68d9109ec3da)
-- [Configurando conexão com o banco](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/23/11/2021/aula/6424761e-b119-4369-82b3-c0a9203cf605/28b080c1-ef9b-4bd8-952c-7127ef6a2c7b)
-- [Executando comandos SQL a partir da API](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/23/11/2021/aula/6424761e-b119-4369-82b3-c0a9203cf605/a674d9b5-0250-4c70-92be-c7ff7502f1df)
-- [Autenticação e Criptografia](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/25/11/2021/aula/404170bf-7785-45a6-8aaa-867a71bfa7d6/677147c3-e2eb-4aca-b4c9-83b199f2ad84)
-- [Revisão Módulo 3](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/30/11/2021/aula/c02c95b3-29a6-4c14-bc8c-81883bdc78f5/6167a2ef-0193-4172-91b5-20996b70691f)
-- [Login retornando token](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/30/11/2021/aula/c02c95b3-29a6-4c14-bc8c-81883bdc78f5/1230b372-0fc3-4f02-87d5-d282895070f9)
-- [Filtro de autenticação lendo token do header](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/30/11/2021/aula/c02c95b3-29a6-4c14-bc8c-81883bdc78f5/7ff4dbfb-0312-4f21-904f-6b6da823861b)
-- [Utilizando recursos com token no header](https://plataforma.cubos.academy/curso/90bb4fdd-85c7-4f90-9753-38c264a80382/data/30/11/2021/aula/c02c95b3-29a6-4c14-bc8c-81883bdc78f5/24fec911-895c-467b-b192-1d65b97d02b0)
-
----
-
-**LEMBRE-SE**: Feito é melhor que perfeito!!!
-
-###### tags: `back-end` `módulo 3` `nodeJS` `PostgreSQL` `API REST` `desafio`
